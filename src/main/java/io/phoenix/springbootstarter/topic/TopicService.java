@@ -2,6 +2,7 @@ package io.phoenix.springbootstarter.topic;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,10 +10,10 @@ import java.util.List;
 public class TopicService {
 
 
-    private List<Topic> topics = Arrays.asList(new Topic("spring", "Spring Framework", "Spring Framework Description"),
+    private List<Topic> topics =new ArrayList<>(Arrays.asList(new Topic("spring", "Spring Framework", "Spring Framework Description"),
             new Topic("java", "Core Java", "Core Java Description"),
             new Topic("javascript", "JavScript", "JavaScript Description")
-    );   //ges automaticall converted to json object
+    ));   //ges automaticall converted to json object
 
     public List<Topic> getAllTopics()
     {
@@ -28,5 +29,25 @@ public class TopicService {
     public void addTopic(Topic topic)
     {
         topics.add(topic);
+    }
+
+    public void updateTopic(String id,Topic topic)
+    {
+        for(int i=0; i<topics.size();i++)
+        {
+            Topic t = topics.get(i);
+            if(t.getId().equals(id))
+            {
+                topics.set(i,topic);
+                return;
+            }
+        }
+        topics.add(topic);
+    }
+
+    public void deleteTopic(String id)
+    {
+       topics.removeIf(t -> t.getId().equals(id));
+
     }
 }
